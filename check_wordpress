@@ -37,7 +37,9 @@ $plugins = get_site_transient('update_plugins');
 $themes = get_site_transient('update_themes');
 
 if ($themes) {
-	// TBD
+	foreach($themes->response as $theme) {
+		array_push($update_themes, $theme['theme']);
+	}
 }
 
 
@@ -60,6 +62,7 @@ if ($core) {
 print "Installed WP Version: $wp_version\n";
 print "Core: $update_core\n";
 print "Plugins: " . join($update_plugins,',') . "\n";
+print "Themes: " . join($update_themes,',') . "\n";
 */
 
 if ( $update_core || $update_plugins || $update_themes) {
@@ -81,6 +84,15 @@ if ( $update_core || $update_plugins || $update_themes) {
 	}
 	else {
 		$message .= "Plugins OK";
+	}
+
+	$message .= " - ";
+	if ($update_themes) {
+		$message .= "Themes to upgrade (" . join($update_themes, ",") . ")";
+		if ($err_code == 0) $err_code = 1;
+	}
+	else {
+		$message .= "Themes OK";
 	}
 	echo "$message\n";
 	exit($err_code);
