@@ -20,9 +20,9 @@ if($argc != 2) {
         print "usage: check_wordpress <path to wordpress>\n";
         exit(1);
 }
-$update_core    = false;
+$update_core    = array();
 $update_plugins = array();
-$update_themes  = false;
+$update_themes  = array();
 
 chdir($argv[1]);
 require_once('./wp-load.php');
